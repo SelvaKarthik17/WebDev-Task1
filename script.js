@@ -5,17 +5,6 @@ var best = document.getElementsByClassName("besttime");
 var sdd = document.getElementById("sd");
 var dpp = document.getElementById("dp");
 var ss =0;
-function top5(top,data){
-     function numberasc(a,b) {
-   return a-b;
- }
- data.sort(numberasc);
-    for(m=0;m<5;m++){
-        top[m]=data[m];
-    }
-}
-var bestscore = new Array(6);
-    bestscore[0] = 0;
 var scores = new Array(5);
     var ivl = 0;
     var idd =0;
@@ -153,11 +142,55 @@ function element(z)
                 dpp.innerHTML = ss;
                 game.innerHTML="reset";
                 game.className="new";
-                scores.push(ss);
-                top5(bestscore,scores);
-             for(y=0;y<5;y++){
-                 if(bestscore[y] > 0)
-                    best[y].innerHTML = bestscore[y];
+
+            if(localStorage.length == 0){
+                localStorage.setItem("score1",ss);
+               }
+             else if(localStorage.length == 1){
+                localStorage.setItem("score2",ss);
+             }
+             else if(localStorage.length == 2){
+                localStorage.setItem("score3",ss);}
+             else if(localStorage.length == 3){
+                localStorage.setItem("score4",ss);}
+             else if(localStorage.length == 4){
+                localStorage.setItem("score5",ss);
+                 }
+             else if(localStorage.length == 5){
+                 scores[0] = parseFloat(localStorage.getItem("score1"));
+                 scores[1] = parseFloat(localStorage.getItem("score2"));
+                 scores[2] = parseFloat(localStorage.getItem("score3"));
+                 scores[3] = parseFloat(localStorage.getItem("score4"));
+                 scores[4] = parseFloat(localStorage.getItem("score5"));
+                 function numberasc(a,b) {
+                               return a-b;
+                                }
+                          scores.sort(numberasc);
+                 
+                  if(ss < scores[4]){
+                     scores.push(ss);
+                     scores.sort(numberasc);
+                     localStorage.setItem("score1",scores[0]);
+                     localStorage.setItem("score2",scores[1]);
+                     localStorage.setItem("score3",scores[2]);
+                     localStorage.setItem("score4",scores[3]);
+                     localStorage.setItem("score5",scores[4]);
+                 }
+             }
+                
+                 scores[0] = parseFloat(localStorage.getItem("score1"));
+                 scores[1] = parseFloat(localStorage.getItem("score2"));
+                 scores[2] = parseFloat(localStorage.getItem("score3"));
+                 scores[3] = parseFloat(localStorage.getItem("score4"));
+                 scores[4] = parseFloat(localStorage.getItem("score5"));  
+             function numberasc(a,b) {
+                               return a-b;
+                                }
+                          scores.sort(numberasc);
+            for(y=0;y<5;y++){
+                 if(scores[y] > 0){
+                   best[y].innerHTML = scores[y];}
+                    
              }            
                 window.clearInterval(ivl);
              game.onclick = function(){
